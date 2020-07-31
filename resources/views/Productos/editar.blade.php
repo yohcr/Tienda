@@ -196,7 +196,7 @@
       </div>
 
       <div class="col-sm-4">
-        <button type="submit" class="btn btn-success btn-block mb-2 btn-lg" >Actualizar</button>
+        <button type="submit" class="btn btn-success btn-block mb-2 btn-lg">Actualizar</button>
       </div>
 
     </div>
