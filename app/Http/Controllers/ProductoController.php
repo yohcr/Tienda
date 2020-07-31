@@ -13,11 +13,21 @@ class ProductoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        //$productos = Producto::orderBy('id','DESC');
         $productos = Producto::all();
         //dd($productos);
         return view('Productos.productos', compact('productos'));
+       /* if($request)
+        {
+            $query = trim($request->get(key,'buscarProducto'));
+            $busqueda = Producto::where("nombre_producto","LIKE","%".$query."%")
+            ->orderBy("id","asc")
+            ->get();
+        return redirect()->route('productos',["busqueda" => $busqueda, "" => $query]);
+    
+        }*/
     }
 
     /**
@@ -25,37 +35,59 @@ class ProductoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+  
     public function create()
     {
         $proveedores = Proveedor::all();
         return view('Productos.registrar', compact('proveedores'));
     }
-
+    
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+  /*  public function search(Request $request)
+    {
+        if($request)
+        {
+            $query = trim($request->get(key,'buscarProducto'));
+            $busqueda = Producto::where("nombre_producto","LIKE","%".$query."%")
+            ->orderBy("id","asc")
+            ->get();
+        return redirect()->route('productos',["busqueda" => $busqueda, "" => $query]);
+    
+        }
+        
+    }*/
+    /*
+    public function search(Request $request){
+        $nombres    =   Producto::where("nombre_producto",'like',$request->buscarProducto."%")->take(10)->get();
+        return view("Producto",compact("productos"));        
+    } */
+
     public function store(Request $request)
     {
         $this->validate(request(), [//Validacion por parte del servidor
             'codigo' => 'required',
-            'nombre'=> 'required',
+            'nombre_producto'=> 'required',
             'presentacion' => 'required',
             'presentacion_2' => 'required|notIn:0',
             'proveedor' => 'required|notIn:0',
             'categoria' => 'required|notIn:0',
             'precio_venta'=> 'required',
-            'existencias' => 'numeric',
+            'existencias' => 'numeric'
         ]);
 
         $data = $request->all();
 
         $producto = new Producto();
         $producto->codigo = $data["codigo"];
-        $producto->nombre_producto = $data["nombre"];
-        $producto->presentacion = $data["presentacion"] + $data["presentacion_2"];
+        $producto->nombre_producto = $data["nombre_producto"];
+        $producto->presentacion = $data["presentacion"];
+        $producto->presentacion_2= $data["presentacion_2"];
         $producto->proveedor_id = $data["proveedor"];
         $producto->categoria = $data["categoria"];
         $producto->precio = $data["precio_venta"];
@@ -65,7 +97,6 @@ class ProductoController extends Controller
         if($res){
             return redirect()->route('productos')->with('success','Se ha registrado un nuevo producto');
         }
-
     }
 
     /**
@@ -76,7 +107,8 @@ class ProductoController extends Controller
      */
     public function show($id)
     {
-        //
+        $producto = Producto::findOrFail($id);
+        return redirect()->route('productos')->with('success','Encontrado');
     }
 
     /**
@@ -88,6 +120,8 @@ class ProductoController extends Controller
     public function edit($id)
     {
         //
+        $producto = Producto::where(['id' => $id])->firstOrFail();
+        return view('Productos.editar', compact('producto'));
     }
 
     /**
@@ -99,7 +133,30 @@ class ProductoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //Alert::message('The end is near', 'danger');
+        $data = $request->all();
+        
+        $producto = Producto::where(['id' => $id])->firstOrFail();
+     
+        $producto->codigo = $data["codigo"];
+        $producto->nombre_producto = $data["nombre_producto"];
+        $producto->presentacion = $data["presentacion"];
+        $producto->presentacion_2= $data["presentacion_2"];
+        $producto->proveedor_id = $data["proveedor_id"];
+        $producto->categoria = $data["categoria"];
+        $producto->precio = $data["precio_venta"];
+        $producto->existencias = $data["existencias"];
+        $res = $producto->update();
+     
+        if($res){
+            return redirect()->route('productos')->with('success','Se han actualizado los datos del producto');   
+        }
+        else
+        {
+            return redirect()->route('productos')->with('ijoles','valio kk xd');  
+            
+        }
+
     }
 
     /**
@@ -110,8 +167,16 @@ class ProductoController extends Controller
      */
     public function destroy($id)
     {
-        $proveedor = Producto::where(['id' => $id])->firstOrFail();
-        $proveedor->delete();
+        $producto = Producto::where(['id' => $id])->firstOrFail();
+        $producto->delete();
         return redirect()->route('productos')->with('warning','Se ha dado de baja el producto seleccionado');
+    }
+
+     public function descontinuados()
+    {
+        
+        $productos = Producto::onlyTrashed()->get();
+        return view('Productos.productos', compact('productos'));
+       
     }
 }

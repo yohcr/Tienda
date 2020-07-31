@@ -16,9 +16,15 @@
     @csrf
 
     <div class="form-group row">
-      <label for="inputEmail3" class="col-sm-2 col-form-label col-form-label-lg">Codigo</label>
+      <label for="inputEmail3" class="col-sm-2 col-form-label col-form-label-lg">Código</label>
       <div class="col-sm-8">
         <input type="text" name="codigo" class="form-control{{ $errors->has('codigo') ? ' is-invalid' : '' }} form-control-lg" autocomplete="off" placeholder="000000">
+
+        @if ($errors->has('codigo'))
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $errors->first('codigo') }}</strong>
+          </span>
+        @endif
       </div>
       <span style="color:red">*</span>
     </div>
@@ -26,7 +32,12 @@
     <div class="form-group row">
       <label  class="col-sm-2 col-form-label col-form-label-lg">Nombre</label>
       <div class="col-sm-8">
-        <input type="text" name="nombre" class="form-control{{ $errors->has('nombre') ? ' is-invalid' : '' }} form-control-lg" placeholder="Ingresa el nombre del producto" autocomplete="off">
+        <input type="text" name="nombre_producto" class="form-control{{ $errors->has('nombre_producto') ? ' is-invalid' : '' }} form-control-lg" placeholder="Ingresa el nombre del producto" autocomplete="off">
+        @if ($errors->has('nombre_producto'))
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $errors->first('nombre_producto') }}</strong>
+          </span>
+        @endif
       </div>
       <span style="color:red">*</span>
     </div>
@@ -35,16 +46,26 @@
       <label for="inputPassword3" class="col-sm-2 col-form-label col-form-label-lg">Presentación</label>
       <div class="col-sm-4">
         <input type="text" name="presentacion" class="form-control{{ $errors->has('presentacion') ? ' is-invalid' : '' }} form-control-lg" placeholder="000" autocomplete="off">
+        @if ($errors->has('presentacion'))
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $errors->first('presentacion') }}</strong>
+          </span>
+        @endif
       </div>
       <span style="color:red">*</span>
       <div class="col-sm-4">
         <select class="form-control{{ $errors->has('presentacion_2') ? ' is-invalid' : '' }} form-control-lg" name="presentacion_2">
           <option value="0" selected>Selecciona una medida de peso</option>
-          <option value="1">Gramo (gr.)</option>
-          <option value="2">Kilo-gramo (Kg.)</option>
-          <option value="3">Mili-litro (ml.)</option>
-          <option value="4">Litro (L.)</option>
+          <option value="gr">Gramo (gr.)</option>
+          <option value="Kg">Kilo-gramo (Kg.)</option>
+          <option value="ml">Mili-litro (ml.)</option>
+          <option value="L">Litro (L.)</option>
         </select>
+        @if ($errors->has('presentacion_2'))
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $errors->first('presentacion_2') }}</strong>
+          </span>
+        @endif
       </div>
       <span style="color:red">*</span>
     </div>
@@ -59,6 +80,11 @@
           <option value="{{$proveedor->id}}">{{$proveedor->empresa}}</option>
           @endforeach
         </select>
+        @if ($errors->has('proveedor'))
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $errors->first('proveedor') }}</strong>
+          </span>
+        @endif
       </div>
       <span style="color:red">*</span>
     </div>
@@ -76,6 +102,11 @@
           <option value="Galletas">Galletas</option>
           <option value="Dulces">Dulces</option>
         </select>
+        @if ($errors->has('categoria'))
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $errors->first('categoria') }}</strong>
+          </span>
+        @endif
       </div>
       <span style="color:red">*</span>
     </div>
@@ -84,6 +115,11 @@
       <label  class="col-sm-2 col-form-label col-form-label-lg">Precio de venta</label>
       <div class="col-sm-8">
         <input type="text" name="precio_venta" class="form-control{{ $errors->has('precio_venta') ? ' is-invalid' : '' }} form-control-lg" placeholder="00.00" autocomplete="off">
+        @if ($errors->has('precio_venta'))
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $errors->first('precio_venta') }}</strong>
+          </span>
+        @endif
       </div>
       <span style="color:red">*</span>
     </div>
@@ -91,7 +127,7 @@
     <div class="form-group row">
       <label  class="col-sm-2 col-form-label col-form-label-lg">Existencias</label>
       <div class="col-sm-8">
-        <input type="number" name="existencias" class="form-control{{ $errors->has('existencias') ? ' is-invalid' : '' }} form-control-lg" placeholder="0" autocomplete="off">
+        <input type="number" name="existencias" class="form-control{{ $errors->has('existencias') ? ' is-invalid' : '' }} form-control-lg" min="0" placeholder="0" autocomplete="off">
       </div>
     </div>
 
@@ -101,7 +137,7 @@
       <div class="col-sm-2"></div>
 
       <div class="col-sm-4">
-        <button type="submit" class="btn btn-danger btn-block mb-2 btn-lg">Cancelar</button>
+          <a href="{{ route('productos') }}" onclick="return confirm('¿Seguro que desea salir?')" class="btn btn-danger mb-2 btn-lg btn-block "> Cancelar</a>
       </div>
 
       <div class="col-sm-4">

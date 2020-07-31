@@ -22,7 +22,7 @@
 </head>
 <body style="background-color: #FFFFFF">
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel" style="background-color: #e3f2fd;">
+        <nav class="navbar navbar-expand-md navbar-dark bg-primary navbar-laravel" >
 
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/home') }}">
@@ -37,26 +37,31 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="">Inicio</a>
+                            <a class="nav-link" href="/">Inicio</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link active" href="{{route('productos')}}">Productos</a>
+                            <a class="nav-link " href="{{route('productos')}}">Productos</a>
+
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('proveedores')}}">Proveedores</a>
                         </li>
 
-                        <!--
+                        
                         <li class="nav-item">
-                            <a class="nav-link disabled" href="">Ventas</a>
+                            <a class="nav-link" href="{{route('clientes')}}">Clientes</a>
                         </li>
 
+                        
                         <li class="nav-item">
-                            <a class="nav-link disabled" href="">Compras</a>
+                            <a class="nav-link" href="{{route('compras')}}">Compras</a>
                         </li>
-                        -->
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('ventas')}}">Ventas</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
