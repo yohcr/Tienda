@@ -9,7 +9,7 @@
     </div>
   </div> <br><br>
 
-  <form method="POST"  action="{{ route('actualizarP', $producto->id) }}">
+  <form method="POST"  action="{{ route('actualizarproducto', $producto->id) }}">
    
     @csrf
     <div class="form-group row">

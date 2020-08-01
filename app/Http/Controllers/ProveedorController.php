@@ -92,7 +92,7 @@ class ProveedorController extends Controller
         $this->validate(request(), [//Validacion por parte del servidor
             'nombre' => 'required',
             'empresa'=> 'required',
-            'telefono' => 'min:10|max:10'
+            'telefono' => 'max:10'
         ]);
 
         $data = $request->all();
@@ -122,4 +122,12 @@ class ProveedorController extends Controller
         $proveedor->delete();
         return redirect()->route('proveedores')->with('warning','Se ha eliminado el proveedor');
     }
+
+    public function buscar(Request $request)
+    {
+        $nombre = $request["nombre"];
+        $proveedores = Proveedor::where('nombre_proveedor','LIKE','%'.$nombre.'%')->get();
+        return view('Proveedores.proveedores', compact('proveedores'));
+    }
+
 }

@@ -36,6 +36,7 @@ Route::group(['prefix'=>'Proveedor'], function(){
 	Route::get('/editar/{id}','ProveedorController@edit')->name('editarproveedor');
 	Route::put('/guardar/{id}','ProveedorController@update')->name('actualizarproveedor');
 	Route::delete('/eliminar/{id}','ProveedorController@destroy')->name('eliminarproveedor');
+	Route::post('/buscar','ProveedorController@buscar')->name('buscarproveedor');
 });
 
 
@@ -47,6 +48,7 @@ Route::group(['prefix'=>'Producto'], function(){
 	Route::put('/guardar/{id}','ProductoController@update')->name('actualizarproducto');
 	Route::delete('/eliminar/{id}','ProductoController@destroy')->name('eliminarproducto');
 	Route::get('/descontinuados','ProductoController@descontinuados')->name('productosdescontinuados');
+	Route::post('/buscar','ProductoController@buscar')->name('buscarproducto');
 });
 
 Route::group(['prefix'=>'Cliente'], function(){
