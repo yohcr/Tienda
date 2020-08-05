@@ -37,6 +37,7 @@ Route::group(['prefix'=>'Proveedor'], function(){
 	Route::put('/guardar/{id}','ProveedorController@update')->name('actualizarproveedor');
 	Route::delete('/eliminar/{id}','ProveedorController@destroy')->name('eliminarproveedor');
 	Route::post('/buscar','ProveedorController@buscar')->name('buscarproveedor');
+	Route::post('/buscardia','ProveedorController@buscarPorDia')->name('buscardia');
 });
 
 
@@ -58,6 +59,7 @@ Route::group(['prefix'=>'Cliente'], function(){
 	Route::get('/editar/{id}','ClienteController@edit')->name('editarcliente');
 	Route::put('/guardar/{id}','ClienteController@update')->name('actualizarcliente');
 	Route::delete('/eliminar/{id}','ClienteController@destroy')->name('eliminarcliente');
+	Route::post('/buscar','ClienteController@buscar')->name('buscarcliente');
 });
 
 Route::group(['prefix'=>'Compra'], function(){

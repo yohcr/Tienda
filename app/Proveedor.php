@@ -9,5 +9,5 @@ class Proveedor extends Model
 {
 	use SoftDeletes;
 	protected $dates = ['deleted_at'];
-	protected $fillable = ['nombre_proveedor','empresa','telefono'];
+	protected $fillable = ['nombre_proveedor','empresa','telefono','dia_visita'];
 }

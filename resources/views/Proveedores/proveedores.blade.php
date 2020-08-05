@@ -31,49 +31,51 @@
 	</form>
 
 	<br>
+  
+  <br>
 
 	<h3>Resultados</h3>
 	<table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Nombre</th>
-      <th scope="col">Empresa</th>
-      <th scope="col">Teléfono</th>
-      <th scope="col">Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-    @if($proveedores==null)
-    <tr>
-      <td colspan="5" class="text-xs-center" >No se encontraron resultados</td>
-    </tr>
-    @else
-      @foreach($proveedores as $proveedor)
-    <tr>
-      <td>{{$proveedor->id}}</td>
-      <td>{{$proveedor->nombre_proveedor}}</td>
-      <td>{{$proveedor->empresa}}</td>
-      <td>{{$proveedor->telefono}}</td>
-      <td>
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Empresa</th>
+        <th scope="col">Teléfono</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @if($proveedores==null)
+      <tr>
+        <td colspan="5" class="text-xs-center" >No se encontraron resultados</td>
+      </tr>
+      @else
+        @foreach($proveedores as $proveedor)
+      <tr>
+        <td>{{$proveedor->id}}</td>
+        <td>{{$proveedor->nombre_proveedor}}</td>
+        <td>{{$proveedor->empresa}}</td>
+        <td>{{$proveedor->telefono}}</td>
+        <td>
 
-        <a href="{{action('ProveedorController@edit', $proveedor->id)}}" class="btn btn-primary btn-sm">
-          <span class="fas fa-edit"></span>
-        </a>
+          <a href="{{action('ProveedorController@edit', $proveedor->id)}}" class="btn btn-primary btn-sm">
+            <span class="fas fa-edit"></span>
+          </a>
 
-        <form style="display: inline;" action="{{route('eliminarproveedor', $proveedor->id)}}" method="post">
-          @csrf
-           @method('DELETE')
-          <button class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro de eliminar el proveedor seleccionado?')"  title="Eliminar"> <i class="fas fa-trash"></i>
-          </button>
-        </form>
+          <form style="display: inline;" action="{{route('eliminarproveedor', $proveedor->id)}}" method="post">
+            @csrf
+             @method('DELETE')
+            <button class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro de eliminar el proveedor seleccionado?')"  title="Eliminar"> <i class="fas fa-trash"></i>
+            </button>
+          </form>
 
-      </td>
-    </tr>
-      @endforeach
-    @endif
-  </tbody>
-</table>
+        </td>
+      </tr>
+        @endforeach
+      @endif
+    </tbody>
+  </table>
 
 
 

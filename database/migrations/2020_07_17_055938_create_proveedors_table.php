@@ -18,6 +18,7 @@ class CreateProveedorsTable extends Migration
             $table->string('nombre_proveedor');
             $table->string('empresa');
             $table->string('telefono')->nullable();
+            $table->string('dia_visita');
             $table->timestamps();
             $table->softDeletes();
         });

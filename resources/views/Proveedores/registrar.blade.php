@@ -57,6 +57,23 @@
 
     <br>
 
+    <div class="form-group row">
+      <label for="inputPassword3" class="col-sm-2 col-form-label col-form-label-lg">Dia de visita</label>
+      <div class="col-sm-8">
+        <select class="form-control" name="dia_visita" required>
+        <option value="Lunes">Lunes</option>
+        <option value="Martes">Martes</option>
+        <option value="Miercoles">Miercoles</option>
+        <option value="Jueves">Jueves</option>
+        <option value="Viernes">Viernes</option>
+        <option value="Sabado">Sabado</option>
+        <option value="Domingo">Domingo</option>
+      </select>
+      </div>
+    </div>
+
+    <br>
+
     <div class="row">
       <div class="col-sm-2"></div>
 

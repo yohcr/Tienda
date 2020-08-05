@@ -95,4 +95,10 @@ class ClienteController extends Controller
     {
         //
     }
+    public function buscar(Request $request)
+    {
+        $nombre = $request["nombre"];
+        $clientes = Cliente::where('nombre','LIKE','%'.$nombre.'%')->get();
+        return view('Clientes.clientes', compact('clientes'));
+    }
 }
