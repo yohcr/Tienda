@@ -85,65 +85,6 @@
       </div>
      <span style="color:red">*</span>
     </div>
-   <!---  --> 
-
-    <!--- probando extraer prov prueba 2  Estos si los puedes tocar!!
-
-    <div class="form-group row">
-      <label  class="col-sm-2 col-form-label col-form-label-lg">Proveedor xd</label>
-      <div class="col-sm-8">
-        <select name="proveedor_id" class="form-control{{ $errors->has('proveedor') ? ' is-invalid' : '' }} form-control-lg" >
-
-        @if ($errors->has('proveedor_id'))
-          <span class="invalid-feedback" role="alert">
-            <strong>{{ $errors->first('proveedor_id') }}</strong>
-            <option  value="{{$producto->proveedor_id}}" selected>{{$producto->proveedor_id}}</option>
-            @foreach($proveedores as $proveedor)
-          <option value="{{$proveedor->id}}">{{$proveedor->empresa}}</option>
-            @endforeach
-          
-          </span>
-        @endif
-        </select>
-      </div>
-      <span style="color:red">*</span>
-    </div>
-
-
-
-
-    <div class="form-group row">
-      <label  class="col-sm-2 col-form-label col-form-label-lg">Proveedor 2</label>
-      <div class="col-sm-8">
-       <select class="form-control{{ $errors->has('proveedor') ? ' is-invalid' : '' }} form-control-lg" name="proveedor">
-       @if ($errors->has('proveedor_id'))
-          <option  value="{{$proveedor->id}}" selected>Selecciona un proveedor</option>
-           @foreach($proveedores as $proveedor)
-          <option value="{{$proveedor->id}}">{{$proveedor->empresa}}</option>
-          @endforeach
-         @endif
-        </select>
-      </div>
-      <span style="color:red">*</span>
-    </div>
-
-    <div class="form-group row">
-      <label  class="col-sm-2 col-form-label col-form-label-lg">Proveedor 3</label>
-      <div class="col-sm-8">
-       <select class="form-control{{ $errors->has('proveedor_id') ? ' is-invalid' : '' }} form-control-lg" name="proveedor_id">
-       @if ($errors->has('proveedor_id'))
-          <option  value="{{$producto->proveedor_id}}" selected>Selecciona un proveedor</option>
-           @foreach($proveedores as $proveedor)
-             <option value="{{$producto->proveedor_id}}">{{$producto->proveedor_id}}</option>
-           @endforeach
-        @endif
-        </select>
-      </div>
-      <span style="color:red">*</span>
-    </div>
-
-    --->
-
 
     <div class="form-group row">
       <label for="inputPassword3" class="col-sm-2 col-form-label col-form-label-lg">Categoria</label>
