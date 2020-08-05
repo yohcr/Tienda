@@ -37,6 +37,7 @@ Route::group(['prefix'=>'Proveedor'], function(){
 	Route::put('/guardar/{id}','ProveedorController@update')->name('actualizarproveedor');
 	Route::delete('/eliminar/{id}','ProveedorController@destroy')->name('eliminarproveedor');
 	Route::post('/buscar','ProveedorController@buscar')->name('buscarproveedor');
+
 });
 
 
@@ -70,6 +71,7 @@ Route::group(['prefix'=>'Venta'], function(){
 	Route::get('/','VentaController@index')->name('ventas');
 	Route::get('/nuevo','VentaController@create')->name('nuevaventa');
 	Route::post('/guardar','VentaController@store')->name('guardarventa');
+	Route::get('/detalle/{id}','VentaController@show')->name('verdetallesventa');
 });
 
 

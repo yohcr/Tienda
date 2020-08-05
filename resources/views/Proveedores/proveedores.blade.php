@@ -17,11 +17,13 @@
       <br>
 
 	<form method="POST" action="{{ route('buscarproveedor') }}">
+
     @csrf
     @method('POST')
     <div class="row">
       <div class="col-sm">
          <input type="text" class="form-control mb-2" id="staticEmail2" name="nombre" placeholder="Nombre del proveedor">
+
       </div>
 
       <div class="col-sm">
