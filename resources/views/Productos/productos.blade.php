@@ -19,7 +19,9 @@
    </div>
       <br>
 
-	<form>
+	<form method="POST" action="{{ route('buscarproducto') }}">
+    @csrf
+    @method('POST')
     <div class="row">
       <div class="col-sm">
          <input type="text" class="form-control mb-2" id="buscarProducto" name="buscarProducto" placeholder="Codigo o nombre">

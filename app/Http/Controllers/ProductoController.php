@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Producto;
 use App\Proveedor;
 
@@ -13,21 +14,16 @@ class ProductoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        //$productos = Producto::orderBy('id','DESC');
         $productos = Producto::all();
-        //dd($productos);
-        return view('Productos.productos', compact('productos'));
-       /* if($request)
-        {
-            $query = trim($request->get(key,'buscarProducto'));
-            $busqueda = Producto::where("nombre_producto","LIKE","%".$query."%")
-            ->orderBy("id","asc")
+        $productos = DB::table('productos')
+            ->join('proveedors','productos.proveedor_id','=','proveedors.id')
+            ->where('productos.deleted_at','=',null)
+            ->select('productos.*','proveedors.empresa')
             ->get();
-        return redirect()->route('productos',["busqueda" => $busqueda, "" => $query]);
-    
-        }*/
+        $proveedores = Proveedor::all();
+        return view('Productos.productos', compact('productos', 'proveedores')) ;
     }
 
     /**
@@ -49,25 +45,6 @@ class ProductoController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-  /*  public function search(Request $request)
-    {
-        if($request)
-        {
-            $query = trim($request->get(key,'buscarProducto'));
-            $busqueda = Producto::where("nombre_producto","LIKE","%".$query."%")
-            ->orderBy("id","asc")
-            ->get();
-        return redirect()->route('productos',["busqueda" => $busqueda, "" => $query]);
-    
-        }
-        
-    }*/
-    /*
-    public function search(Request $request){
-        $nombres    =   Producto::where("nombre_producto",'like',$request->buscarProducto."%")->take(10)->get();
-        return view("Producto",compact("productos"));        
-    } */
-
     public function store(Request $request)
     {
         $this->validate(request(), [//Validacion por parte del servidor
@@ -77,8 +54,7 @@ class ProductoController extends Controller
             'presentacion_2' => 'required|notIn:0',
             'proveedor' => 'required|notIn:0',
             'categoria' => 'required|notIn:0',
-            'precio_venta'=> 'required',
-            'existencias' => 'numeric'
+            'precio_venta'=> 'required'
         ]);
 
         $data = $request->all();
@@ -91,7 +67,13 @@ class ProductoController extends Controller
         $producto->proveedor_id = $data["proveedor"];
         $producto->categoria = $data["categoria"];
         $producto->precio = $data["precio_venta"];
-        $producto->existencias = $data["existencias"];
+
+        if ($data["existencias"]==null) {
+            $producto->existencias = 0;
+        }else{
+            $producto->existencias = $data["existencias"];
+        }
+
         $res = $producto->save();
 
         if($res){
@@ -146,6 +128,8 @@ class ProductoController extends Controller
         $producto->categoria = $data["categoria"];
         $producto->precio = $data["precio_venta"];
         $producto->existencias = $data["existencias"];
+        if($producto->existencias == null)
+            $producto->existencias = 0;
         $res = $producto->update();
      
         if($res){
@@ -174,9 +158,68 @@ class ProductoController extends Controller
 
      public function descontinuados()
     {
-        
-        $productos = Producto::onlyTrashed()->get();
-        return view('Productos.productos', compact('productos'));
+        $productos = DB::table('productos')
+            ->join('proveedors','productos.proveedor_id','=','proveedors.id')
+            ->where('productos.deleted_at','!=',null)
+            ->select('productos.*','proveedors.empresa')
+            ->get();
+        $proveedores = Proveedor::all();
+        return view('Productos.productos', compact('productos', 'proveedores')) ;
        
+    }
+
+    public function buscar(Request $request)
+    {
+
+        $nombre = $request["nombre"];
+        if($nombre == null)
+            $nombre = '°';
+        $proveedor = $request["proveedor"]; 
+        if($proveedor== -1)
+            $proveedor = null;
+
+        if($proveedor!=null){
+            $productos = DB::table('Productos')
+                ->join('proveedors','productos.proveedor_id','=','proveedors.id')
+                ->where('productos.nombre_producto','LIKE','%'.$nombre.'%') 
+                ->Where('productos.proveedor_id',$proveedor)
+                ->where('productos.deleted_at','=',null)
+                ->select('productos.*','proveedors.empresa')
+                ->get();
+            if(count($productos)<=0){//Hubo resultados mediante el nombre??
+                $productos = DB::table('Productos')
+                    ->join('proveedors','productos.proveedor_id','=','proveedors.id')
+                    ->where('productos.codigo','=', $nombre)
+                    ->Where('productos.proveedor_id',$proveedor)
+                    ->where('productos.deleted_at','=',null)
+                    ->select('productos.*','proveedors.empresa')
+                    ->get();
+            }    
+        }else{
+            $productos = DB::table('Productos')
+                ->join('proveedors','productos.proveedor_id','=','proveedors.id')
+                ->where('productos.nombre_producto','LIKE','%'.$nombre.'%') 
+                ->where('productos.deleted_at','=',null)
+                ->select('productos.*','proveedors.empresa')
+                ->get();
+            if(count($productos)<=0){//Hubo resultados mediante el nombre??
+                $productos = DB::table('Productos')
+                    ->join('proveedors','productos.proveedor_id','=','proveedors.id')
+                    ->where('productos.codigo','=', $nombre)
+                    ->where('productos.deleted_at','=',null)
+                    ->select('productos.*','proveedors.empresa')
+                    ->get();
+            }    
+        }
+        if($nombre == '°' and $proveedor == null){
+            $productos = Producto::all();
+            $productos = DB::table('productos')
+                ->join('proveedors','productos.proveedor_id','=','proveedors.id')
+                ->where('productos.deleted_at','=',null)
+                ->select('productos.*','proveedors.empresa')
+                ->get();
+        }
+        $proveedores = Proveedor::all(); 
+        return view('Productos.productos', compact('productos', 'proveedores')) ;    
     }
 }

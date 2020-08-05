@@ -114,7 +114,7 @@
     <div class="form-group row">
       <label  class="col-sm-2 col-form-label col-form-label-lg">Precio de venta</label>
       <div class="col-sm-8">
-        <input type="text" name="precio_venta" class="form-control{{ $errors->has('precio_venta') ? ' is-invalid' : '' }} form-control-lg" placeholder="00.00" autocomplete="off">
+        <input type="number" name="precio_venta" class="form-control{{ $errors->has('precio_venta') ? ' is-invalid' : '' }} form-control-lg" placeholder="00.00" autocomplete="off" step="any" min="0">
         @if ($errors->has('precio_venta'))
           <span class="invalid-feedback" role="alert">
             <strong>{{ $errors->first('precio_venta') }}</strong>
