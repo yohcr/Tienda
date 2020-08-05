@@ -13,7 +13,7 @@ class ProductoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         //$productos = Producto::orderBy('id','DESC');
         $productos = Producto::all();
@@ -77,8 +77,7 @@ class ProductoController extends Controller
             'presentacion_2' => 'required|notIn:0',
             'proveedor' => 'required|notIn:0',
             'categoria' => 'required|notIn:0',
-            'precio_venta'=> 'required',
-            'existencias' => 'numeric'
+            'precio_venta'=> 'required'
         ]);
 
         $data = $request->all();
@@ -91,7 +90,13 @@ class ProductoController extends Controller
         $producto->proveedor_id = $data["proveedor"];
         $producto->categoria = $data["categoria"];
         $producto->precio = $data["precio_venta"];
-        $producto->existencias = $data["existencias"];
+
+        if ($data["existencias"]==null) {
+            $producto->existencias = 0;
+        }else{
+            $producto->existencias = $data["existencias"];
+        }
+        
         $res = $producto->save();
 
         if($res){

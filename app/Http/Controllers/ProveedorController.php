@@ -122,4 +122,13 @@ class ProveedorController extends Controller
         $proveedor->delete();
         return redirect()->route('proveedores')->with('warning','Se ha eliminado el proveedor');
     }
+
+    public function search(Request $request){
+        $nombre = $request["nombre"];
+
+        //dd($nombre);
+        $proveedores = Proveedor::where('nombre_proveedor','LIKE','%'.$nombre.'%')->get();
+
+        return view('Proveedores.proveedores',compact('proveedores'));
+    }
 }
