@@ -6,11 +6,11 @@
 
    <div class="row">
       <div class="col-sm">
-         <h1>Proveedores</h1>
+         <h1>Compras</h1>
       </div>
 
       <div class="col-sm">
-          <a href="{{ route('nuevoproveedor') }}" class="btn btn-success mb-2 btn-lg btn-block "><span class="fas fa-plus"></span> Agregar nuevo</a>
+          <a href="{{ route('nuevacompra') }}" class="btn btn-success mb-2 btn-lg btn-block "><span class="fas fa-plus"></span> Agregar nueva</a>
       </div>
       
    </div>
@@ -19,7 +19,7 @@
 	<form>
     <div class="row">
       <div class="col-sm">
-         <input type="text" class="form-control mb-2" id="staticEmail2" placeholder="Nombre del proveedor">
+         <input type="date" class="form-control mb-2" id="staticEmail2">
       </div>
 
       <div class="col-sm">
@@ -42,12 +42,12 @@
     </tr>
   </thead>
   <tbody>
-    @if($proveedores==null)
+    @if($compras==null)
     <tr>
       <td colspan="5" class="text-xs-center" >No se encontraron resultados</td>
     </tr>
     @else
-      @foreach($proveedores as $proveedor)
+      @foreach($compras as $compra)
     <tr>
       <td>{{$proveedor->id}}</td>
       <td>{{$proveedor->nombre_proveedor}}</td>

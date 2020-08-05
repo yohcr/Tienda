@@ -24,23 +24,21 @@
     @method('POST')
     <div class="row">
       <div class="col-sm">
-         <input type="text" class="form-control mb-2" id="buscarProducto" name="buscarProducto" placeholder="Codigo o nombre">
+         <input type="text" class="form-control mb-2" id="buscarProducto" name="nombre" placeholder="Codigo o nombre">
       </div>
       
       <div class="col-sm">
-        <select class="custom-select mb-2 ">
-          <option selected>Seleccionar proveedor</option>
-          <option value="1">Bimbo</option>
-          <option value="2">Coca-cola</option>
-          <option value="3">Gamesa</option>
+        <select class="custom-select mb-2 " name="proveedor">
+          <option value="-1" selected>Seleccionar proveedor</option>
+          @foreach($proveedores as $proveedor)
+            <option value="{{$proveedor->id}}">{{$proveedor->empresa}}</option>
+          @endforeach
         </select>
       </div>
 
       <div class="col-sm">
-      <a href="#"> <button type="submit"  class="btn btn-primary mb-2 btn-block"> <span class="fas fa-search"></span> Buscar</button></a>
+        <button type="submit"  class="btn btn-primary mb-2 btn-block"> <span class="fas fa-search"></span> Buscar</button>
       </div> 
- 
-
     </div> 
 	</form>
 
@@ -72,7 +70,7 @@
         <td>{{$producto->nombre_producto}}</td>
         <td>{{$producto->presentacion}}, {{$producto->presentacion_2}}</td>
       <!--  $proveedores as $proveedor   $producto->proveedor_id.$proveedor->empresa -->
-        <td>{{$producto->proveedor_id}}</td>
+        <td>{{$producto->empresa}}</td>
 
         <td>${{$producto->precio}}</td>
         <td>{{$producto->existencias}}</td>

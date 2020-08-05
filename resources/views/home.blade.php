@@ -60,6 +60,7 @@
 
 	</div>
 	<br>
+
 	<div class="card">
 		<div class="card-header">
 			Visitas de Proveedores del día {{$day}}
@@ -71,7 +72,6 @@
 			    <h5 class="card-title">{{$proveedor->empresa}}</h5>
 			    <h6 class="card-subtitle mb-2 text-muted">{{$proveedor->nombre_proveedor}}</h6>
 			    <p class="card-text">{{$proveedor->telefono}}</p>
-			    
 			  </div>
 			</div>
 		</div>
