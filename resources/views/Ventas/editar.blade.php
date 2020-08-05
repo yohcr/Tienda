@@ -11,7 +11,7 @@
 
   <div class="row">
     <div class="col-sm">
-      <h1>Detalle de Venta</h1>
+      <h1>Detalle de Venta:</h1>
     </div>
   </div>
   <br>
