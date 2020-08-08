@@ -66,6 +66,7 @@ Route::group(['prefix'=>'Compra'], function(){
 	Route::get('/','CompraController@index')->name('compras');
 	Route::get('/nuevo','CompraController@create')->name('nuevacompra');
 	Route::post('/guardar','CompraController@store')->name('guardarcompra');
+	Route::get('/ver/{id}','CompraController@show')->name('vercompra');
 });
 
 Route::group(['prefix'=>'Venta'], function(){

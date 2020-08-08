@@ -5,23 +5,28 @@
   <br>
   <div class="row">
     <div class="col-sm">
-      <h1>Nuevo proveedor</h1>
+      <h1>Nueva Compra</h1>
     </div>
   </div>
 
   <br>
   <br>
 
-  <form method="POST" action="{{ route('guardarproveedor') }}">
+  <form method="POST" action="{{ route('guardarcompra') }}"enctype="multipart/form-data">
     @csrf
     <div class="form-group row">
-      <label for="inputEmail3" class="col-sm-2 col-form-label col-form-label-lg">Nombre Completo</label>
+      <label  class="col-sm-2 col-form-label col-form-label-lg">Proveedor</label>
       <div class="col-sm-8">
-        <input type="text" name="nombre" class="form-control{{ $errors->has('nombre') ? ' is-invalid' : '' }} form-control-lg"  placeholder="Ingresa el nombre completo" autocomplete="off" value="{{ old('nombre') }}">
-
-        @if ($errors->has('nombre'))
+       <select class="form-control{{ $errors->has('proveedor') ? ' is-invalid' : '' }} form-control-lg" name="idproveedor">
+       
+          <option  value="0" selected>Selecciona un proveedor</option>
+           @foreach($proveedores as $proveedor)
+          <option value="{{$proveedor->id}}">{{$proveedor->empresa}}</option>
+          @endforeach
+        </select>
+        @if ($errors->has('proveedor'))
           <span class="invalid-feedback" role="alert">
-            <strong>{{ $errors->first('nombre') }}</strong>
+            <strong>{{ $errors->first('proveedor') }}</strong>
           </span>
         @endif
       </div>
@@ -29,13 +34,13 @@
     </div>
 
     <div class="form-group row">
-      <label  class="col-sm-2 col-form-label col-form-label-lg">Empresa</label>
+      <label  class="col-sm-2 col-form-label col-form-label-lg">Fecha a pagar</label>
       <div class="col-sm-8">
-        <input type="text" name="empresa" class="form-control{{ $errors->has('empresa') ? ' is-invalid' : '' }} form-control-lg" placeholder="Ejemplo S.A." autocomplete="off" value="{{ old('empresa') }}">
+        <input type="Date" name="fechaapagar" class="form-control{{ $errors->has('fechaapagar') ? ' is-invalid' : '' }} form-control-lg" placeholder="Ejemplo S.A." autocomplete="off" value="{{ old('fechaapagar') }}">
 
-        @if ($errors->has('empresa'))
+        @if ($errors->has('fechaapagar'))
           <span class="invalid-feedback" role="alert">
-            <strong>{{ $errors->first('empresa') }}</strong>
+            <strong>{{ $errors->first('fechaapagar') }}</strong>
           </span>
         @endif
       </div>
@@ -43,18 +48,41 @@
     </div>
 
     <div class="form-group row">
-      <label for="inputPassword3" class="col-sm-2 col-form-label col-form-label-lg">Teléfono</label>
+      <label for="inputPassword3" class="col-sm-2 col-form-label col-form-label-lg">Estado</label>
       <div class="col-sm-8">
-        <input type="text" name="telefono" class="form-control{{ $errors->has('telefono') ? ' is-invalid' : '' }} form-control-lg" placeholder="7771234567" autocomplete="off" value="{{ old('telefono') }}">
+        <select class="form-control{{ $errors->has('estado') ? ' is-invalid' : '' }} form-control-lg" name="estado">
+          <option  value="-1" selected>Selecciona un Estado de la compra</option>
+          <option value="0">Pendiente</option>
+          <option value="1">Pagada</option>
+        </select>
+      </div>
+    </div>
 
-        @if ($errors->has('telefono'))
+    <div class="form-group row">
+      <label  class="col-sm-2 col-form-label col-form-label-lg">Total a pagar</label>
+      <div class="col-sm-8">
+        <input type="number" name="total" class="form-control{{ $errors->has('total') ? ' is-invalid' : '' }} form-control-lg"  placeholder="Ingresa el total de la compra" autocomplete="off" value="{{ old('total') }}" step="any" min="0">
+
+        @if ($errors->has('total'))
           <span class="invalid-feedback" role="alert">
-            <strong>{{ $errors->first('telefono') }}</strong>
+            <strong>{{ $errors->first('total') }}</strong>
           </span>
         @endif
       </div>
     </div>
 
+    <div class="form-group row">
+      <label  class="col-sm-2 col-form-label col-form-label-lg">Ingresa el ticket</label>
+      <div class="col-sm-8">
+        <input type="file" name="archivo" class="form-control-file {{ $errors->has('archivo') ? ' is-invalid' : '' }} form-control-lg"  placeholder="Ingresa el ticket de la compra" autocomplete="off" value="{{ old('archivo') }}" accept="image/*">
+
+        @if ($errors->has('archivo'))
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $errors->first('archivo') }}</strong>
+          </span>
+        @endif
+      </div>
+    </div>
     <br>
 
     <div class="row">

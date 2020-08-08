@@ -15,8 +15,15 @@ class CreateComprasTable extends Migration
     {
         Schema::create('compras', function (Blueprint $table) {
             $table->increments('id');
-            $table->total();
+            $table->double('total', 8, 2);
+            $table->integer('idproveedor')->unsigned();
+            $table->integer('estado');
+            $table->date('fechaapagar')->nulleable();
+            $table->string('archivo');
             $table->timestamps();
+
+
+            $table->foreign('idproveedor')->references('id')->on('proveedors');
         });
     }
 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDetalleVentasTable extends Migration
+class CreateDetalleComprasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateDetalleVentasTable extends Migration
      */
     public function up()
     {
-        Schema::create('detalle_ventas', function (Blueprint $table) {
+        Schema::create('detalle_compras', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('producto_id')->unsigned();
             $table->integer('cantidad');
             $table->double('subtotal', 8, 2);
-            $table->integer('venta_id')->unsigned();
+            $table->integer('compra_id')->unsigned();
             $table->timestamps();
 
             $table->foreign('producto_id')->references('id')->on('productos');
-            $table->foreign('venta_id')->references('id')->on('ventas');
+            $table->foreign('compra_id')->references('id')->on('compras');
         });
     }
 
@@ -33,6 +33,6 @@ class CreateDetalleVentasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('detalle_ventas');
+        Schema::dropIfExists('detalle_compras');
     }
 }

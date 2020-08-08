@@ -70,7 +70,8 @@ class ClienteController extends Controller
      */
     public function edit($id)
     {
-        //
+        $cliente = Cliente::find($id);
+        return view('Clientes.editar', compact('cliente'));
     }
 
     /**
@@ -82,7 +83,13 @@ class ClienteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+        $cliente = Cliente::find($id);
+        $cliente->nombre = $data["nombre"];
+        $res = $cliente->update();
+        if($res){
+            return redirect()->route('clientes')->with('success','Se han actualizado los datos del producto');
+        }
     }
 
     /**
