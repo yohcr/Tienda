@@ -17,7 +17,7 @@
   <br>
   @foreach($ventas as $venta)
     <p>Folio: {{$venta->id}}</p>
-    <p>Fecha: {{$venta->created_at}}</p>
+    <p>Fecha: {{\Carbon\Carbon::parse($venta->created_at)->format('d/m/Y')}}</p>
     <p>Cliente: {{$venta->nombre}}
   @endforeach
 
@@ -44,6 +44,14 @@
       <td>${{$detalle->subtotal}}</td>
     </tr>
       @endforeach
+    <tr>
+        <td colspan="3" class="text-right">
+          <h4>TOTAL</h4>
+        </td>
+        <td>
+          <h4>${{$venta->total}}</h4>
+        </td>
+    </tr>
     @endif
   </tbody>
 </table>

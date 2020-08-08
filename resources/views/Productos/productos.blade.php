@@ -8,11 +8,11 @@
          <h1>Productos</h1>
       </div>
 
-      <div class="col-sm">
+      <div class="col-sm-2">
           <a href="{{ route('nuevoproducto') }}" class="btn btn-success mb-2 btn-block"> <span class="fas fa-plus"></span> Agregar nuevo</a>
       </div>
 
-      <div class="col-sm">
+      <div class="col-sm-2">
           <a href="{{ route('productosdescontinuados') }}" class="btn btn-danger mb-2 btn-block"><span class="fas fa-ban"></span> Descontinuados</a>
       </div>
       

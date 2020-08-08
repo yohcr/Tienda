@@ -11,8 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="{{ asset('js/lib/jquery-2.1.4.min.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -27,7 +26,7 @@
         <nav class="navbar navbar-expand-md navbar-dark bg-primary navbar-laravel" >
 
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="#">
                     {{ config('app.name', 'Laravel') }}
                 </a>
 
@@ -35,11 +34,12 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
+                @auth
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/">Inicio</a>
+                            <a class="nav-link" href="{{route('home')}}">Inicio</a>
                         </li>
 
                         <li class="nav-item">
@@ -68,9 +68,18 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        
+                        <a class="nav-link" href="{{ route('login') }}"
+                           onclick="event.preventDefault();
+                                         document.getElementById('logout-form').submit();">
+                            {{ __('Salir') }}
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </ul>
                 </div>
+                @endauth
+                
             </div>
 
         </nav>
@@ -81,3 +90,4 @@
     </div>
 </body>
 </html>
+@yield('script')

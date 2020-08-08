@@ -17,7 +17,6 @@
       <br>
 
 	<form method="POST" action="{{ route('buscarproveedor') }}">
-
     @csrf
     @method('POST')
     <div class="row">

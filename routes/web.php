@@ -12,9 +12,10 @@
 */
 
 Route::get('/', function() { 
-	return view('home'); 
+	return view('auth.login'); 
 });
 
+/*
 Route::get('/nuevo', function() { 
 	return view('Proveedores.registrar'); 
 });
@@ -26,10 +27,13 @@ Route::get('/Ventas', function() {
 Route::get('/Compras', function() { 
 	return view('home'); 
 });
+*/
 
+Auth::routes();
 
+Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['prefix'=>'Proveedor'], function(){
+Route::group(['prefix'=>'Proveedor', 'middleware' => 'auth'], function(){
 	Route::get('/','ProveedorController@index')->name('proveedores');
 	Route::get('/nuevo','ProveedorController@create')->name('nuevoproveedor');
 	Route::post('/guardar','ProveedorController@store')->name('guardarproveedor');
@@ -41,7 +45,7 @@ Route::group(['prefix'=>'Proveedor'], function(){
 });
 
 
-Route::group(['prefix'=>'Producto'], function(){
+Route::group(['prefix'=>'Producto', 'middleware' => 'auth'], function(){
 	Route::get('/','ProductoController@index')->name('productos');
 	Route::get('/nuevo','ProductoController@create')->name('nuevoproducto');
 	Route::post('/guardar','ProductoController@store')->name('guardarproducto');
@@ -49,10 +53,11 @@ Route::group(['prefix'=>'Producto'], function(){
 	Route::put('/guardar/{id}','ProductoController@update')->name('actualizarproducto');
 	Route::delete('/eliminar/{id}','ProductoController@destroy')->name('eliminarproducto');
 	Route::get('/descontinuados','ProductoController@descontinuados')->name('productosdescontinuados');
+	Route::put('/habilitar/{id}','ProductoController@habilitar')->name('habilitarproducto');
 	Route::post('/buscar','ProductoController@buscar')->name('buscarproducto');
 });
 
-Route::group(['prefix'=>'Cliente'], function(){
+Route::group(['prefix'=>'Cliente', 'middleware' => 'auth'], function(){
 	Route::get('/','ClienteController@index')->name('clientes');
 	Route::get('/nuevo','ClienteController@create')->name('nuevocliente');
 	Route::post('/guardar','ClienteController@store')->name('guardarcliente');
@@ -61,17 +66,17 @@ Route::group(['prefix'=>'Cliente'], function(){
 	Route::delete('/eliminar/{id}','ClienteController@destroy')->name('eliminarcliente');
 });
 
-Route::group(['prefix'=>'Compra'], function(){
+Route::group(['prefix'=>'Compra', 'middleware' => 'auth'], function(){
 	Route::get('/','CompraController@index')->name('compras');
 	Route::get('/nuevo','CompraController@create')->name('nuevacompra');
 	Route::post('/guardar','CompraController@store')->name('guardarcompra');
 });
 
-Route::group(['prefix'=>'Venta'], function(){
+Route::group(['prefix'=>'Venta', 'middleware' => 'auth'], function(){
 	Route::get('/','VentaController@index')->name('ventas');
 	Route::get('/nuevo','VentaController@create')->name('nuevaventa');
 	Route::post('/guardar','VentaController@store')->name('guardarventa');
 	Route::get('/detalle/{id}','VentaController@show')->name('verdetallesventa');
+	Route::post('/consultarFecha','VentaController@buscarFecha')->name('consultarfecha');
 });
-
 
