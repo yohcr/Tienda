@@ -15,7 +15,6 @@ class CreateComprasTable extends Migration
     {
         Schema::create('compras', function (Blueprint $table) {
             $table->increments('id');
-            $table->double('total', 8, 2);
             $table->integer('idproveedor')->unsigned();
             $table->integer('estado');
             $table->date('fechaapagar')->nulleable();
