@@ -5,7 +5,6 @@
 	use Carbon\Carbon;
   	use App\Venta;
   	$fecha = Carbon::now();
-    
     $ventas = Venta::where('created_at','=',$fecha)->get();
 @endphp
 <div class="container">
