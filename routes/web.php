@@ -41,7 +41,7 @@ Route::group(['prefix'=>'Proveedor', 'middleware' => 'auth'], function(){
 	Route::put('/guardar/{id}','ProveedorController@update')->name('actualizarproveedor');
 	Route::delete('/eliminar/{id}','ProveedorController@destroy')->name('eliminarproveedor');
 	Route::post('/buscar','ProveedorController@buscar')->name('buscarproveedor');
-
+	Route::post('/buscardia','ProveedorController@buscarPorDia')->name('buscardia');
 });
 
 
@@ -64,12 +64,14 @@ Route::group(['prefix'=>'Cliente', 'middleware' => 'auth'], function(){
 	Route::get('/editar/{id}','ClienteController@edit')->name('editarcliente');
 	Route::put('/guardar/{id}','ClienteController@update')->name('actualizarcliente');
 	Route::delete('/eliminar/{id}','ClienteController@destroy')->name('eliminarcliente');
+	Route::post('/buscar','ClienteController@buscar')->name('buscarcliente');
 });
 
 Route::group(['prefix'=>'Compra', 'middleware' => 'auth'], function(){
 	Route::get('/','CompraController@index')->name('compras');
 	Route::get('/nuevo','CompraController@create')->name('nuevacompra');
 	Route::post('/guardar','CompraController@store')->name('guardarcompra');
+	Route::get('/ver/{id}','CompraController@show')->name('vercompra');
 });
 
 Route::group(['prefix'=>'Venta', 'middleware' => 'auth'], function(){

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Proveedor;
+use Carbon\Carbon;
 
 class ProveedorController extends Controller
 {
@@ -48,6 +49,7 @@ class ProveedorController extends Controller
         $proveedor->nombre_proveedor = $data["nombre"];
         $proveedor->empresa = $data["empresa"];
         $proveedor->telefono = $data["telefono"];
+        $proveedor->dia_visita = $data["dia_visita"];
         $res = $proveedor->save();
 
         if($res){
@@ -127,6 +129,41 @@ class ProveedorController extends Controller
     {
         $nombre = $request["nombre"];
         $proveedores = Proveedor::where('nombre_proveedor','LIKE','%'.$nombre.'%')->get();
+        return view('Proveedores.proveedores', compact('proveedores'));
+    }
+
+    public function buscarPorDia()
+    {
+        $dia = Carbon::now();
+        $day = Carbon::parse($dia)->format('l');
+        switch ($day) {
+            case 'Monday':
+                $day = 'Lunes';
+                break;
+            case 'Tuesday':
+                $day = 'Martes';
+                break;
+            case 'Wednesday':
+                $day = 'Miercoles';
+                break;
+            case 'Thursday':
+                $day = 'Jueves';
+                break;
+            case 'Friday':
+                $day = 'Viernes';
+                break;
+            case 'Saturday':
+                $day = 'Sabado';
+                break;
+            case 'Sunday':
+                $day = 'Domingo';
+                break;
+            default:
+                $day = 'None';
+                break;
+        }
+        //dd($day);
+        $proveedores = Proveedor::where('dia_visita','=',$day)->get();
         return view('Proveedores.proveedores', compact('proveedores'));
     }
 

@@ -16,10 +16,12 @@
    </div>
       <br>
 
-	<form>
+	<form method="POST" action="{{ route('buscarcliente') }}">
+    @csrf
+    @method('POST')
     <div class="row">
       <div class="col-sm">
-         <input type="text" class="form-control mb-2" id="staticEmail2" placeholder="Nombre del cliente">
+         <input type="text" class="form-control mb-2" id="staticEmail2" placeholder="Nombre del cliente" name="nombre">
       </div>
 
       <div class="col-sm">

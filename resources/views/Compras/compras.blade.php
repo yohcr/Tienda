@@ -35,9 +35,9 @@
   <thead class="thead-dark">
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Nombre</th>
-      <th scope="col">Empresa</th>
-      <th scope="col">Teléfono</th>
+      <th scope="col">Proveedor</th>
+      <th scope="col">Total</th>
+      <th scope="col">Fecha</th>
       <th scope="col">Acciones</th>
     </tr>
   </thead>
@@ -49,22 +49,15 @@
     @else
       @foreach($compras as $compra)
     <tr>
-      <td>{{$proveedor->id}}</td>
-      <td>{{$proveedor->nombre_proveedor}}</td>
-      <td>{{$proveedor->empresa}}</td>
-      <td>{{$proveedor->telefono}}</td>
+      <td>{{$compra->id}}</td>
+      <td>{{$compra->empresa}}</td>
+      <td>{{$compra->total}}</td>
+      <td>{{$compra->created_at}}</td>
       <td>
 
-        <a href="{{action('ProveedorController@edit', $proveedor->id)}}" class="btn btn-primary btn-sm">
+        <a href="{{action('CompraController@show', $compra->id)}}" class="btn btn-primary btn-sm">
           <span class="fas fa-edit"></span>
         </a>
-
-        <form style="display: inline;" action="{{route('eliminarproveedor', $proveedor->id)}}" method="post">
-          @csrf
-           @method('DELETE')
-          <button class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro de eliminar el proveedor seleccionado?')"  title="Eliminar"> <i class="fas fa-trash"></i>
-          </button>
-        </form>
 
       </td>
     </tr>
