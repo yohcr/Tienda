@@ -16,10 +16,12 @@
    </div>
       <br>
 
-	<form>
+	<form method="POST" action="{{route('consultarfecha')}}">
+    @csrf
+    @method('POST')
     <div class="row">
       <div class="col-sm">
-         <input type="date" class="form-control mb-2" >
+         <input type="date" class="form-control mb-2" name="fecha" >
       </div>
 
       <div class="col-sm">
@@ -52,7 +54,8 @@
       <td>{{$venta->id}}</td>
       <td>{{$venta->nombre}}</td>
       <td>${{$venta->total}}</td>
-      <td>{{$venta->created_at}}</td>
+      <td>{{\Carbon\Carbon::parse($venta->created_at)->format('d/m/Y')}}</td>
+
       <td>
 
         <a href="{{action('VentaController@show', $venta->id)}}" title="Detalles" class="btn btn-info btn-sm">

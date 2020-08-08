@@ -156,6 +156,14 @@ class ProductoController extends Controller
         return redirect()->route('productos')->with('warning','Se ha dado de baja el producto seleccionado');
     }
 
+    public function habilitar($id)
+    {
+        //User::
+        $producto = Producto::onlyTrashed()->find($id)->restore();
+        //$producto->delete();
+        return redirect()->route('productos')->with('warning','Se habilitado nuevamente el producto');
+    }
+
      public function descontinuados()
     {
         $productos = DB::table('productos')
@@ -164,7 +172,7 @@ class ProductoController extends Controller
             ->select('productos.*','proveedors.empresa')
             ->get();
         $proveedores = Proveedor::all();
-        return view('Productos.productos', compact('productos', 'proveedores')) ;
+        return view('Productos.descontinuados', compact('productos', 'proveedores')) ;
        
     }
 

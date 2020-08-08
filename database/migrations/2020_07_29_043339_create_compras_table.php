@@ -20,6 +20,7 @@ class CreateComprasTable extends Migration
             $table->integer('estado');
             $table->date('fechaapagar')->nulleable();
             $table->string('archivo');
+            $table->double('total',8,2);
             $table->timestamps();
 
 

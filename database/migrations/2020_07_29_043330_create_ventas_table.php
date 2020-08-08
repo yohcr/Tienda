@@ -18,7 +18,6 @@ class CreateVentasTable extends Migration
             $table->double('total', 8, 2);
             $table->integer('cliente_id')->unsigned();
             $table->timestamps();
-
             $table->foreign('cliente_id')->references('id')->on('clientes');
         });
     }

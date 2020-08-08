@@ -22,7 +22,7 @@ class VentaController extends Controller
         //$ventas = Venta::all();
         $ventas = DB::table('ventas')
             ->join('clientes', 'ventas.cliente_id', '=', 'clientes.id')
-            ->select('ventas.*', 'clientes.*')
+            ->select('ventas.*', 'clientes.nombre')
             ->get();
         return view('Ventas.ventas',compact('ventas'));
     }
@@ -47,7 +47,37 @@ class VentaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       $data = $request->all();
+       //dd($data);
+       $venta = new Venta();
+       $venta->cliente_id = $data["cliente_id"];
+       $venta->total = substr($data["total"], 1);
+       $venta->save();
+
+       $cant = count($data["producto_id"]);
+       $productos = $data["producto_id"];
+       $cantidad = $data["cantidad"];
+       $subtotal = $data["subtotal"];
+       //dd($subtotal);
+       //dd($productos[0]);
+
+       
+
+       for ($i=0; $i < $cant; $i++) {
+            //dd($i);
+           $detalleventa = new detalle_venta();
+           $detalleventa->producto_id = $productos[$i];
+           $detalleventa->cantidad = $cantidad[$i];
+           $detalleventa->subtotal = $subtotal[$i];
+           $detalleventa->venta_id = $venta->id;
+           $detalleventa->save();
+           //dd($detalleventa);
+       }
+
+        return redirect()->route('ventas')->with('success','Se ha registrado la venta');
+    
+       
+
     }
 
     /**
@@ -64,6 +94,7 @@ class VentaController extends Controller
                 ->where('detalle_ventas.venta_id','=',$id)
                 ->select('detalle_ventas.*','productos.*')
                 ->get();
+        //dd($detalleventa);
 
         $ventas = DB::table('ventas')
             ->join('clientes', 'ventas.cliente_id', '=', 'clientes.id')
@@ -106,5 +137,18 @@ class VentaController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function buscarFecha(Request $request){
+        $data = $request->all();
+        $fecha = $data["fecha"];
+        //dd($fecha);
+        $ventas = DB::table('ventas')
+            ->join('clientes', 'ventas.cliente_id', '=', 'clientes.id')
+            ->where('ventas.created_at','=',$fecha)
+            ->select('ventas.*','clientes.*')
+            ->get();
+            
+        return view('Ventas.ventas',compact('ventas'));
     }
 }
