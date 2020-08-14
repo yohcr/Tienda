@@ -64,7 +64,7 @@ class VentaController extends Controller
        
 
        for ($i=0; $i < $cant; $i++) {
-            //dd($i);
+        //dd($i);
            $detalleventa = new detalle_venta();
            $detalleventa->producto_id = $productos[$i];
            $detalleventa->cantidad = $cantidad[$i];
@@ -72,12 +72,15 @@ class VentaController extends Controller
            $detalleventa->venta_id = $venta->id;
            $detalleventa->save();
            //dd($detalleventa);
+           $producto = Producto::where(['id' => $productos[$i]])->firstOrFail();
+           $cant = $producto->existencias;
+           $cant = $cant - $detalleventa->cantidad;
+           $producto->existencias = $cant;
+           $producto->save();
        }
 
         return redirect()->route('ventas')->with('success','Se ha registrado la venta');
     
-       
-
     }
 
     /**
@@ -145,10 +148,10 @@ class VentaController extends Controller
         //dd($fecha);
         $ventas = DB::table('ventas')
             ->join('clientes', 'ventas.cliente_id', '=', 'clientes.id')
-            ->where('ventas.created_at','=',$fecha)
-            ->select('ventas.*','clientes.*')
+            ->where('ventas.created_at','LIKE', '%'.$fecha.'%') 
+            ->select('ventas.*','clientes.nombre')
             ->get();
-            
+        //dd($ventas);  
         return view('Ventas.ventas',compact('ventas'));
     }
 }

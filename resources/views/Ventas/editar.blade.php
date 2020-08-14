@@ -38,7 +38,7 @@
     @else
       @foreach($detalleventa as $detalle)
     <tr>
-      <td>{{$detalle->id}}</td>
+      <td>{{$detalle->codigo}}</td>
       <td>{{$detalle->nombre_producto}}</td>
       <td>{{$detalle->cantidad}}</td>
       <td>${{$detalle->subtotal}}</td>

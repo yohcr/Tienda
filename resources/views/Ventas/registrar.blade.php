@@ -247,29 +247,33 @@
       }
 
       //Detecta cuando cambia algo de la tabla de venta
-      $("#tablaventa").on("mouseover",".cant", function(){
+      $("#tablaventa").on("click",".cant", function(){
           console.log("cambio la cantidad");
           $(".cant").change(function(){
               //Obtiene la nueva cantidad 
               nuevaCantidad = $(this).val();
+              console.log("Nueva cantidad: "+nuevaCantidad);
               //Obtenemos el id para saber que fila es
               fila = $(this).attr("id");
               //Obtenemos el numero de fila
               fila = fila.split('_')[1];
-              //console.log(id);
+              console.log("Fila modificada: "+fila);
               idProd = parseInt($("#codigo_"+fila).val());
+              console.log("Id de producto: "+idProd);
               //obtiene el subtotal de ese producto
               subtotalAux = $("#subtotal_"+fila).text();
               subtotalAux = subtotalAux.split(' ')[1];
               subtotalAux = parseFloat(subtotalAux);
-              console.log(subtotalAux);
+              console.log("Subtotal actual: "+subtotalAux);
               productoAux = productos[idProd-1];
               precioAux = parseFloat(productoAux.precio);
+              console.log("Precio unitario: "+precioAux);
               nuevoSubtotal = nuevaCantidad*precioAux;
-              console.log(nuevoSubtotal);
+              console.log("Nuevo subtotal: "+nuevoSubtotal);
               total = total - subtotalAux;
               total = total + nuevoSubtotal;
-              $("#subtotal_"+fila).text("$ "+total);
+              console.log("Nuevo total: "+total);
+              $("#subtotal_"+fila).text("$ "+nuevoSubtotal);
               $("input#cantidadInput_"+fila).val(nuevaCantidad);
               $("input#subtotalInput_"+fila).val(nuevoSubtotal);
               
@@ -279,7 +283,7 @@
       });
 
       //Detecta cuando esta sobre la tabla y agregar el evento de click al boton
-      $("#tablaventa").on("mouseover", ".quitar", function(){
+      $("#tablaventa").on("click", ".quitar", function(){
           $(".quitar").on("click",function(){
               fila = $(this).attr("id");
               fila = fila.split('_')[1];

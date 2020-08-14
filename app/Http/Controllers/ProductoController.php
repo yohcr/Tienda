@@ -183,6 +183,7 @@ class ProductoController extends Controller
         if($nombre == null)
             $nombre = '°';
         $proveedor = $request["proveedor"]; 
+        //dd($proveedor);
         if($proveedor== -1)
             $proveedor = null;
 
@@ -190,18 +191,20 @@ class ProductoController extends Controller
             $productos = DB::table('Productos')
                 ->join('proveedors','productos.proveedor_id','=','proveedors.id')
                 ->where('productos.nombre_producto','LIKE','%'.$nombre.'%') 
-                ->Where('productos.proveedor_id',$proveedor)
+                ->orWhere('productos.proveedor_id','=',$proveedor)
                 ->where('productos.deleted_at','=',null)
                 ->select('productos.*','proveedors.empresa')
                 ->get();
+                //dd($productos);
             if(count($productos)<=0){//Hubo resultados mediante el nombre??
                 $productos = DB::table('Productos')
                     ->join('proveedors','productos.proveedor_id','=','proveedors.id')
                     ->where('productos.codigo','=', $nombre)
-                    ->Where('productos.proveedor_id',$proveedor)
+                    ->Where('productos.proveedor_id','=',$proveedor)
                     ->where('productos.deleted_at','=',null)
                     ->select('productos.*','proveedors.empresa')
                     ->get();
+                
             }    
         }else{
             $productos = DB::table('Productos')

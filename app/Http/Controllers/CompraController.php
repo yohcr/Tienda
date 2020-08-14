@@ -51,7 +51,7 @@ class CompraController extends Controller
     {
         $this->validate(request(), [//Validacion por parte del servidor
             'idproveedor' => 'required|notIn:0',
-            'fechaapagar' => 'required|date',
+            'fechaapagar' => 'date',
             'estado' => 'required|notIn:-1',
             'total' => 'required|notIn:0',
             'archivo' => 'required'

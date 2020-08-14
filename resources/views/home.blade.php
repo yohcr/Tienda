@@ -34,8 +34,14 @@
     }
     $proveedores = Proveedor::where('dia_visita','=',$day)->get();
   	use App\Venta;
+  	use App\Compra;
   	$fecha = Carbon::now();
-    $ventas = Venta::where('created_at','=',$fecha)->get();
+  	$fecha = Carbon::parse($fecha)->format('Y-m-d');
+  	//dd($fecha);
+    $ventas = Venta::where('created_at','LIKE','%'.$fecha)->get();
+    $compras = Compra::where('created_at','LIKE','%'.$fecha.'%')->get();
+    //dd($ventas);
+
 @endphp
 <div class="container">
 
@@ -45,7 +51,7 @@
 			<div class="card text-center">
 				<div class="card-body">
 					<h1>Total de ventas</h1>
-					<h2 class="card-title">$00.00</h2>
+					<h2 class="card-title">$ {{$ventas->sum('total')}}</h2>
 					<!--<a href="#" class="btn btn-primary">Consultar ventas del día</a>-->
 				</div>
 			</div>
@@ -55,7 +61,7 @@
 			<div class="card text-center">
 				<div class="card-body">
 					<h1>Total de Compras</h1>
-					<h2 class="card-title">$00.00</h2>
+					<h2 class="card-title">$ {{$compras->sum('total')}}</h2>
 					<!--<a href="#" class="btn btn-primary">Consultar compras del día</a>-->
 				</div>
 			</div>

@@ -34,6 +34,17 @@
     </div>
 
     <div class="form-group row">
+      <label for="inputPassword3" class="col-sm-2 col-form-label col-form-label-lg">Estado</label>
+      <div class="col-sm-8">
+        <select class="form-control{{ $errors->has('estado') ? ' is-invalid' : '' }} form-control-lg" name="estado">
+          <option  value="-1" selected>Selecciona un Estado de la compra</option>
+          <option value="0">Pendiente</option>
+          <option value="1">Pagada</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
       <label  class="col-sm-2 col-form-label col-form-label-lg">Fecha a pagar</label>
       <div class="col-sm-8">
         <input type="Date" name="fechaapagar" class="form-control{{ $errors->has('fechaapagar') ? ' is-invalid' : '' }} form-control-lg" placeholder="Ejemplo S.A." autocomplete="off" value="{{ old('fechaapagar') }}">
@@ -44,19 +55,9 @@
           </span>
         @endif
       </div>
-      <span style="color:red">*</span>
     </div>
 
-    <div class="form-group row">
-      <label for="inputPassword3" class="col-sm-2 col-form-label col-form-label-lg">Estado</label>
-      <div class="col-sm-8">
-        <select class="form-control{{ $errors->has('estado') ? ' is-invalid' : '' }} form-control-lg" name="estado">
-          <option  value="-1" selected>Selecciona un Estado de la compra</option>
-          <option value="0">Pendiente</option>
-          <option value="1">Pagada</option>
-        </select>
-      </div>
-    </div>
+
 
     <div class="form-group row">
       <label  class="col-sm-2 col-form-label col-form-label-lg">Total a pagar</label>

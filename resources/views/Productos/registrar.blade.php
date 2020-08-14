@@ -57,9 +57,10 @@
         <select class="form-control{{ $errors->has('presentacion_2') ? ' is-invalid' : '' }} form-control-lg" name="presentacion_2">
           <option value="0" selected>Selecciona una medida de peso</option>
           <option value="gr">Gramo (gr.)</option>
-          <option value="Kg">Kilo-gramo (Kg.)</option>
-          <option value="ml">Mili-litro (ml.)</option>
-          <option value="L">Litro (L.)</option>
+          <option value="Kg">Kilogramo (Kg.)</option>
+          <option value="ml">Mililitro (ml.)</option>
+          <option value="Lto">Litro (L.)</option>
+          <option value="pzas">Piezas (pzas)</option>
         </select>
         @if ($errors->has('presentacion_2'))
           <span class="invalid-feedback" role="alert">
@@ -101,6 +102,10 @@
           <option value="Botanas">Botanas</option>
           <option value="Galletas">Galletas</option>
           <option value="Dulces">Dulces</option>
+          <option value="Abarrote">Abarrote</option>
+          <option value="Limpieza">Limpieza</option>
+          <option value="Higiene personal">Higiene Personal</option>
+          <option value="Otros">Otros</option>
         </select>
         @if ($errors->has('categoria'))
           <span class="invalid-feedback" role="alert">
