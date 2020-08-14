@@ -47,6 +47,7 @@ class VentaController extends Controller
      */
     public function store(Request $request)
     {
+
        $data = $request->all();
        //dd($data);
        $venta = new Venta();
@@ -54,14 +55,12 @@ class VentaController extends Controller
        $venta->total = substr($data["total"], 1);
        $venta->save();
 
-       $cant = count($data["producto_id"]);
        $productos = $data["producto_id"];
+       $cant = count($productos);
        $cantidad = $data["cantidad"];
        $subtotal = $data["subtotal"];
        //dd($subtotal);
        //dd($productos[0]);
-
-       
 
        for ($i=0; $i < $cant; $i++) {
         //dd($i);
@@ -78,7 +77,24 @@ class VentaController extends Controller
            $producto->existencias = $cant;
            $producto->save();
        }
-
+      for ($i=0; $i<$cant; $i++) {
+        $detalleventa = new detalle_venta();
+        $detalleventa->producto_id = $productos[$i];
+        $detalleventa->cantidad = $cantidad[$i];
+        $detalleventa->subtotal = $subtotal[$i];
+        $detalleventa->venta_id = $venta->id;
+        //dd($detalleventa->producto_id, $detalleventa->cantidad, $detalleventa->subtotal, $detalleventa->venta_id);
+        if($detalleventa->save()){
+        }else{
+          dd("Detalle NO Registrado.");
+        }
+        //dd($detalleventa);
+        $producto = Producto::where(['id' => $productos[$i]])->firstOrFail();
+        $cant2 = $producto->existencias;
+        $cant2 = $cant2 - $detalleventa->cantidad;
+        $producto->existencias = $cant2;
+        $producto->save();
+      }
         return redirect()->route('ventas')->with('success','Se ha registrado la venta');
     
     }
@@ -104,6 +120,7 @@ class VentaController extends Controller
             ->where('ventas.id','=', $id)
             ->select('ventas.*', 'clientes.*')
             ->get();
+        //dd($detalleventa);
         
         return view('Ventas.editar',compact('detalleventa','ventas'));
     }

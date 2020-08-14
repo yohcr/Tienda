@@ -37,13 +37,16 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
         $this->validate(request(), [//Validacion por parte del servidor
-            'nombre' => 'required'
+            'nombre' => 'required',
+            'telefono' => 'required'
         ]);
 
         $data = $request->all();
 
         $cliente = new Cliente();
         $cliente->nombre = $data["nombre"];
+        $cliente->telefono = $data["telefono"];
+        $cliente->cuenta = 0;
         $res = $cliente->save();
 
         if($res){

@@ -27,6 +27,19 @@
       </div>
       <span style="color:red">*</span>
     </div>
+    <div class="form-group row">
+      <label for="inputEmail3" class="col-sm-2 col-form-label col-form-label-lg">Telefono: </label>
+      <div class="col-sm-8">
+        <input type="text" name="telefono" class="form-control{{ $errors->has('telefono') ? ' is-invalid' : '' }} form-control-lg"  placeholder="Ingresa el telefono" autocomplete="off" value="{{ old('telefono') }}">
+
+        @if ($errors->has('telefono'))
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $errors->first('telefono') }}</strong>
+          </span>
+        @endif
+      </div>
+      <span style="color:red">*</span>
+    </div>
 
     <br>
 

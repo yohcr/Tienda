@@ -55,7 +55,6 @@
           <input id="cantidad" placeholder="1" type="number" name="cantidad" class="form-control" min="1">
         </div>
       </div>
-      
       <br>
 
       <div class="form-group">
@@ -101,6 +100,18 @@
       @csrf
       <input type="hidden" id="cliente" name="cliente_id" value="0">
       <input type="hidden" id="totalCuenta" name="total" value="00.00" class="form-control-plaintext form-control-lg">
+      <div class="form-group" id="cuenta" >
+        <label  class="col-sm-8 col-form-label col-form-label-lg">Tipo de venta:</label>
+        <div class="col">
+          <select class="form-control" name="tipo" id="tipo" required>
+
+            <option  value="0" selected>Selecciona una opcion</option>
+            <option value="1">Pendiente</option>
+            <option value="2">Pagada</option>
+            
+          </select>
+        </div>
+      </div>
       <input type="hidden" id="terminar" class="form-control btn btn-info btn-block mb-2 " value="Terminar venta">
     </form>
     
@@ -114,7 +125,17 @@
 @section('script')
 
 <script>
+    function hide(){
+      var earrings = document.getElementById('cuenta');
+      earrings.style.visibility = 'hidden';
+    }
+
+    function show(){
+      var earrings = document.getElementById('cuenta');
+      earrings.style.visibility = 'visible';
+    }
     $(document).ready(function() {
+      hide();
 
       const productos = {!! json_encode($productos) !!};
       
@@ -122,7 +143,7 @@
       console.log('el documento está preparado');
       var clienteid, productoid, productoseleccionado;
       var cliente, producto, cantidad;
-      var ban1=0,ban2=0,ban3=0;
+      var ban1=0,ban2=0,ban3=0, ban4=0;
       cont = 1;
       total = 0;
 
@@ -138,24 +159,42 @@
 
       $('select#producto').on('change',function(){
           productoid = $(this).val();
+          console.log(productoid);
           producto = $('#producto option:selected').text();
           if(productoid!=0)
             ban2=1;
-          //productoseleccionado = productos[productoid-1]
-          //console.log(productoseleccionado.nombre_producto*cantidad);
+          productoseleccionado = productos[productoid-1];
+          console.log(productoseleccionado);
           //$(this).val();
           //alert(cliente);
       });
 
       $('input#cantidad').on('change',function(){
           cantidad = $('#cantidad').val();
+          console.log(productoseleccionado.existencias);
+          console.log(cantidad);
+          if(cantidad>productoseleccionado.existencias){
+            $('#cantidad').val(productoseleccionado.existencias);
+            console.log('La cantidad excede a las existencias');
+            cantidad = $('#cantidad').val();
+
+          }
           ban3=1;
           //console.log(productoseleccionado.nombre_producto*cantidad);
           //$(this).val();
           //alert(cliente);
       });
+      $('select#tipo').on('change',function(){
+          ban4 = $(this).val();
+          if(ban4==0){
+            console.log('Se debe seleccionar el tipo de venta');
+            $('#terminar').prop('disabled',true);
+          }else{
+            $('#terminar').prop('disabled',false);
+          }
+      });
 
-      $(document).on('change', '#cliente,#producto,#cantidad', function() {
+      $(document).on('change', '#cliente,#producto,#cantidad,#cuenta', function() {
         if(ban1==1 && ban2==1 && ban3==1)
           $('#agregar').prop('disabled',false);
           
@@ -163,6 +202,7 @@
           
       $('#agregar').on("click",function(){
           agregar();
+          show();
       });
 
       
@@ -186,6 +226,8 @@
         cantProducto_input.setAttribute("type","number");
         cantProducto_input.setAttribute("value",cantidad);
         cantProducto_input.setAttribute("min", 1);
+        cantProducto_input.setAttribute("max", productoseleccionado.existencias);
+
         cantProducto_input.setAttribute("id", "cantidad_"+cont);
 
 
@@ -242,6 +284,7 @@
         $('input#cantidad').val('');
         $('#agregar').prop('disabled',true);
         $('#terminar').prop('type',"submit");
+        $('#terminar').prop('disabled',true);
          cont++;
 
       }

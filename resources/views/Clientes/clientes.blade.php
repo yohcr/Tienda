@@ -38,6 +38,8 @@
     <tr>
       <th scope="col">#</th>
       <th scope="col">Nombre</th>
+      <th scope="col">Cuenta</th>
+      <th scope="col">Telefono</th>
       <th scope="col">Acciones</th>
     </tr>
   </thead>
@@ -51,6 +53,8 @@
     <tr>
       <td>{{$cliente->id}}</td>
       <td>{{$cliente->nombre}}</td>
+      <td>${{$cliente->cuenta}}</td>
+      <td>${{$cliente->telefono}}</td>
       <td>
 
         <a href="{{action('ClienteController@edit', $cliente->id)}}" class="btn btn-primary btn-sm" title="Editar">

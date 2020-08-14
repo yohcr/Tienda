@@ -201,6 +201,7 @@ class ProductoController extends Controller
                     ->join('proveedors','productos.proveedor_id','=','proveedors.id')
                     ->where('productos.codigo','=', $nombre)
                     ->Where('productos.proveedor_id','=',$proveedor)
+                    ->orWhere('productos.proveedor_id',$proveedor)
                     ->where('productos.deleted_at','=',null)
                     ->select('productos.*','proveedors.empresa')
                     ->get();
