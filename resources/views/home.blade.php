@@ -2,6 +2,7 @@
 
 @section('content')
 @php
+	use App\Venta;
 	use Carbon\Carbon;
   	use App\Proveedor;
   	$dia = Carbon::now();
@@ -33,9 +34,21 @@
             break;
     }
     $proveedores = Proveedor::where('dia_visita','=',$day)->get();
-  	use App\Venta;
   	$fecha = Carbon::now();
     $ventas = Venta::where('created_at','=',$fecha)->get();
+
+    $ventas = DB::table('ventas')->get();
+    $totalventas = 0;
+    foreach ($ventas as $venta) {
+    	$totalventas += $venta->total;
+    }
+
+    $ventas = DB::table('compras')->get();
+    $totalcompras = 0;
+    foreach ($ventas as $venta) {
+    	$totalcompras += $venta->total;
+    }
+
 @endphp
 <div class="container">
 
@@ -45,7 +58,9 @@
 			<div class="card text-center">
 				<div class="card-body">
 					<h1>Total de ventas</h1>
-					<h2 class="card-title">$00.00</h2>
+					<h2 class="card-title">${{$totalventas}}
+
+					</h2>
 					<!--<a href="#" class="btn btn-primary">Consultar ventas del día</a>-->
 				</div>
 			</div>
@@ -55,7 +70,7 @@
 			<div class="card text-center">
 				<div class="card-body">
 					<h1>Total de Compras</h1>
-					<h2 class="card-title">$00.00</h2>
+					<h2 class="card-title">${{$totalcompras}}</h2>
 					<!--<a href="#" class="btn btn-primary">Consultar compras del día</a>-->
 				</div>
 			</div>
